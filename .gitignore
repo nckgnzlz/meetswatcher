@@ -1,0 +1,27 @@
+# Your personal configuration (Meet URL, ntfy topic) -- secrets, never commit
+.env
+
+# Your saved Google session -- equivalent to being logged into your account
+auth.json
+
+# Local Python virtual environment -- recreated per machine
+venv/
+.venv/
+
+# Python bytecode cache -- generated, never needed in the repo
+__pycache__/
+*.pyc
+
+# Runtime logs -- may contain meeting details and timestamps
+log.txt
+*.log
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor junk
+.vscode/
+.idea/
+*.swp
