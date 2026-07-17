@@ -17,8 +17,8 @@ to anyone else's setup.
 1. Clone this repo and install dependencies:
 
    ```bash
-   git clone <this-repo-url>
-   cd meet-watcher
+   git clone https://github.com/nckgnzlz/meetswatcher.git
+   cd meetswatcher
    python -m venv venv
    source venv/bin/activate        # on Windows: venv\Scripts\activate
    pip install -r requirements.txt
@@ -109,8 +109,8 @@ particular hosting provider.
 2. **Set up the project on the server:**
 
    ```bash
-   git clone <this-repo-url>
-   cd meet-watcher
+   git clone https://github.com/nckgnzlz/meetswatcher.git
+   cd meetswatcher
    python3 -m venv venv
    venv/bin/pip install -r requirements.txt
    venv/bin/playwright install --with-deps chromium
