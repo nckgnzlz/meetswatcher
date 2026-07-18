@@ -58,28 +58,43 @@ notification topic, and (optionally) your server.
    Tip: set `HEADLESS=false` in `.env` for this first run to
    run the progam on your device before uploading it to a virtual machine.
 
-## Google Meet setup (Add Images)
+## Google Meet setup 
 
 Read this before running the script. You must change a couple of Meet settings to make sure the link doesnt expire or kick out the monitor.
 
-**Use a recurring meeting so the link never changes.** Create a recurring
-event in Google Calendar (e.g. weekly office hours) and let Calendar attach a
-Meet link to it. That link stays the same for every occurrence, so you can set
-`MEET_URL` once and forget it. If you instead start ad-hoc meetings from
-meet.google.com, you get a new link every time.
+**Creating the Link** 
 
-**Turn Quick Access OFF for that meeting.** Quick Access is the Meet setting
-that lets people in your organization (or invited guests) join instantly
-without knocking. While it's on, there is no waiting room at all — so this
-tool would never see anyone waiting. Turn it off either in the Calendar
-event's host controls (the gear/settings icon on the Meet options) or from the
-host controls panel inside the meeting itself.
+To create a link for this program, navigate to https://meet.google.com/landing and login. From here, click on "New Meeting" as shown below:
+<p align="center">
+<img width="702" height="292" alt="meet1" src="https://github.com/user-attachments/assets/ec8de7a2-ba26-4125-b105-2ef5758b11c3" />
+</p>
+CLick on "Create a meeting for later" to receive your indefinite meets link:
+<p align="center">
+<img width="246" height="138" alt="meet2" src="https://github.com/user-attachments/assets/289bce21-e963-4de8-91b2-5923919e8b7d" />
+</p>
+Copy the link provided and set `MEET_URL`. Make sure to jot down or bookmark the link for yourself to access when someone wants to join.
+<p align="center">
+<img width="337" height="198" alt="meet3" src="https://github.com/user-attachments/assets/fb109cff-dfc5-4776-91db-f145c8d36a2d" />
+</p>
 
-**A quirk worth knowing:** if you end a recurring meeting with **"End the
-call for everyone"** rather than just **"Leave the call"**, Meet turns Quick
-Access off for all future occurrences too. That happens to be exactly the
-effect you want here — but it's a side effect, so the reliable approach is
-still to set Quick Access off directly in host controls.
+**Updating Access Type.**
+
+Your default meet setting could be letting people in your organization (or invited guests) join instantly
+without knocking rendering this tool useless. To ensure your meeting is correctly set, join your meeting and navigate to the padlock icon at the bottom of your meet:
+<p align="center">
+<img width="1007" height="66" alt="rules1" src="https://github.com/user-attachments/assets/36514de5-eb19-4888-b57f-a192bd501d7a" />
+</p>
+From here, scroll down and find "Meeting access type" and ensure your meeting is set to "Restricted"
+<p align="center">
+<img width="323" height="348" alt="rules2" src="https://github.com/user-attachments/assets/e550d657-c6c4-452e-9640-45e22e41b143" />
+</p>
+
+**Leaving After a Meet** 
+
+When leaving a meet, make sure you leave using "Just leave the call" to ensure there is still a call for MeetWatcher to come back to. 
+<p align="center">
+<img width="376" height="155" alt="leave1" src="https://github.com/user-attachments/assets/ea1f9aa4-5a46-41eb-8426-97d0d23352ac" />
+</p>
 
 **Sessions can quietly expire.** Long-idle Google sessions occasionally hit
 account inactivity or session timeouts that have nothing to do with Meet
@@ -91,18 +106,16 @@ regenerating the session:
 python auth_setup.py
 ```
 
-## Deploying to your own server (Edit Add Images)
+## Deploying to your own server
 
-The monitor is happy to run on any Linux VPS — it just needs Python, a
+The monitor is happy to run on any Linux VPS, it just needs Python, a
 Chromium it can drive, and network access. Nothing about it assumes a
-particular hosting provider.
+particular hosting provider. MeetsWatcher was developed uising DigitalOcean, running on Ubuntu 24.04 (LTS) x64, with droplet specs: vCPU: 1, RAM: 2GB, Disk 50GB. These specifications are billed at about $12.00/mo and are subject to change.
 
 1. **Generate `auth.json` locally first.** The auth setup opens a visible
-   browser window for you to log into, which you can't do on a headless
-   remote box. Run `python auth_setup.py` on your own machine, then copy the
-   resulting `auth.json` to the server (e.g. with `scp`). Remember this file
-   is equivalent to being logged into your Google account — transfer it only
-   over secure channels and don't leave copies lying around.
+   browser window for you to log into, which you can't through the VPS. Run `python auth_setup.py` on your own machine, then copy the
+   resulting `auth.json` to the server (e.g. with `scp`). This file
+   is the equivalent to being logged into your Google account so proceed with caution.
 
 2. **Set up the project on the server:**
 
@@ -126,7 +139,7 @@ particular hosting provider.
    ```
 
    For anything longer than a test, run it under a process manager so it
-   survives reboots and crashes — a systemd service, `tmux`, or whatever you
+   survives reboots and crashes, a systemd service, `tmux`, or whatever you
    prefer. If your meeting only happens during certain hours, systemd timers
    or cron entries that start and stop the service on your schedule work
    nicely and save resources the rest of the time.
