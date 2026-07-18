@@ -1,16 +1,15 @@
-# Meet Watcher
+# MeetsWatcher
 
-Meet Watcher sits in your Google Meet meeting as you (using your own saved
-Google session), keeps an eye on the waiting room, and sends a push
-notification to your phone the moment someone is waiting to be admitted. It's
-useful for office hours, drop-in calls, or any "join whenever" meeting where
-you'd rather do something else until somebody actually shows up. Notifications
-go through [ntfy.sh](https://ntfy.sh), a free push service — no accounts or
-API keys needed, just a topic name you make up.
+MeetsWatcher sits in your Google Meet meeting, keeping an eye on the waiting room, and sends a notification to your phone the moment someone is waiting to be admitted. 
+
+MeetsWatcher is useful for teachers or TAs hosting office hours, drop-in calls, or any "join whenever" meeting. 
+
+This allows users to  be away from the computer during meetings until somebody actually shows up. Once uploaded to a virtual machine, there is no need to even turn on your computer; the session begins monitoring automatically based on your provided office hours. 
+
+Notifications are administered through [ntfy.sh](https://ntfy.sh), a free push service that requires no accounts or API keys, just a topic name you create in the app.
 
 Everything is bring-your-own: your Google account, your meeting link, your
-notification topic, and (optionally) your server. Nothing in this repo is tied
-to anyone else's setup.
+notification topic, and (optionally) your server.
 
 ## Quick Start
 
@@ -32,9 +31,9 @@ to anyone else's setup.
    ```
 
    Edit `.env` and set:
-   - `MEET_URL` — your own Google Meet link (see **Google Meet setup** below
+   - `MEET_URL` // this is your own Google Meet link (see **Google Meet setup** below
      for how to make one that stays permanent).
-   - `NTFY_TOPIC` — a topic name you invent. Pick something long and
+   - `NTFY_TOPIC` // a topic name you invent. Pick something long and
      unguessable, because anyone who knows it can read your notifications.
      Then install the [ntfy app](https://ntfy.sh/) on your phone and subscribe
      to that same topic.
@@ -52,17 +51,16 @@ to anyone else's setup.
    ```
 
    You should get a "Monitor started ✅" notification on your phone right
-   away. Then open your Meet link from another browser or an incognito window
-   and ask to join — within a few seconds you should get a "guest(s) waiting
-   to join!" push. That's the whole loop working.
+   away. To test functionality, open your Meet link from another browser or an incognito window
+   and ask to join, within a few seconds you should get a "guest(s) waiting
+   to join!" push.
 
-   Tip: set `HEADLESS=false` in `.env` for this first run if you want to
-   watch the browser do its thing.
+   Tip: set `HEADLESS=false` in `.env` for this first run to
+   run the progam on your device before uploading it to a virtual machine.
 
-## Google Meet setup
+## Google Meet setup (Add Images)
 
-Read this before running the script — a couple of Meet settings determine
-whether there's even a waiting room to watch.
+Read this before running the script. You must change a couple of Meet settings to make sure the link doesnt expire or kick out the monitor.
 
 **Use a recurring meeting so the link never changes.** Create a recurring
 event in Google Calendar (e.g. weekly office hours) and let Calendar attach a
@@ -93,7 +91,7 @@ regenerating the session:
 python auth_setup.py
 ```
 
-## Deploying to your own server
+## Deploying to your own server (Edit Add Images)
 
 The monitor is happy to run on any Linux VPS — it just needs Python, a
 Chromium it can drive, and network access. Nothing about it assumes a
@@ -135,7 +133,7 @@ particular hosting provider.
 
 ## A note on Google's Terms of Service
 
-This tool automates a real browser interacting with Google Meet — there is no
+This tool automates a real browser interacting with Google Meet. There is no
 official Meet API for watching a waiting room. Automated access to Google
 services falls under the general restrictions in Google's Terms of Service.
 Nothing here does anything a signed-in human couldn't do by hand, but you're
@@ -147,8 +145,7 @@ Google account.
 - The script finds the waiting room by looking for specific text and buttons
   in Meet's UI ("Join now", the People panel, "Admit N guests"). Google
   changes this UI from time to time, and when they do, the selectors here may
-  need updating. If the monitor stops working after a Meet redesign, that's
-  the first place to look.
+  need updating. If the monitor ceases to work, check for any UI changes.
 - It watches one meeting per running instance.
 - Saved Google sessions expire eventually; see **Sessions can quietly
   expire** above.
